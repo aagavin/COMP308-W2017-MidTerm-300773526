@@ -25,11 +25,14 @@ let getDisplayName = (req)=>{
 }
 /* GET home page. wildcard */
 router.get('/', (req, res, next) => {
-
+  var jokesJson = require('../jokes');
+  // for(let i =0; i<jokesJson['data']['children'].length);
+  
   res.render('content/index', {
     title: 'Home',
     books: '',
-    'displayName': getDisplayName(req)
+    'displayName': getDisplayName(req),
+    jokes: jokesJson['data']['children']
    });
 });
 

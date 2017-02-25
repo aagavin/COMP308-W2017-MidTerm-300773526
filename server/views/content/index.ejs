@@ -6,6 +6,14 @@
         <div class="col-md-offset-3 col-md-6">
           <h1><%= title %></h1>
             <h2>Welcome to <%= title %></h2>
+            <br>
+            <small>A small selection of jokes from <a href="reddit.com/r/jokes">reddit.com</a></small>
+            <br><br>
+            <% for(var i=0; i<jokes.length; i++) { %>
+              <b><%= jokes[i]['data'].title %></b>
+              <p><%= jokes[i]['data'].selftext %></p>
+              <br>
+            <% } %>
         </div>
       </div>
     </div>
