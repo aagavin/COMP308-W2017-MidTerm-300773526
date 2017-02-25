@@ -26,6 +26,7 @@ router.get('/', (req, res, next) => {
    });
 });
 
+// login route
 router.get('/login', (req, res, next)=>{
 
   res.render('auth/login', {
@@ -34,16 +35,25 @@ router.get('/login', (req, res, next)=>{
   });
 });
 
+// authenticate the user 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/books',
   failureRedirect: '/login',
   failureFlash: 'bad login'
 }));
 
+// register get route
 router.get('/register', (req, res, next)=>{
-  res.render('auth/register', {'title': 'Register a new account', 'displayName': getDisplayName(req)});
+
+  if(getDisplayName(req)==''){
+    res.render('auth/register', {'title': 'Register a new account', 'displayName': getDisplayName(req)});
+  }
+  else{
+    res.redirect('/');
+  }
 });
 
+// add a new user to the database 
 router.post('/register', (req, res, next)=>{
   let newUser = new user({
     username: req.body.username,
