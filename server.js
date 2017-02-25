@@ -1,3 +1,10 @@
+/*
+  Aaron Fernandes - 300773526 
+  COMP 308 - Midterm exam 
+	https://comp308-300773526.herokuapp.com/
+
+  This file Sets up nodeJs listener port
+*/
 let app = require('./server/app');
 let debug = require('debug')('comp308-w2017-midterm:server');
 let http = require('http');

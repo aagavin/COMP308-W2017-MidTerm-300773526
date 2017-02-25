@@ -1,3 +1,11 @@
+/*
+  Aaron Fernandes - 300773526 
+  COMP 308 - Midterm exam 
+	https://comp308-300773526.herokuapp.com/
+
+  This file sets up express, mongoose, and passport
+  and everything else
+*/
 // modules required for the project
 let express = require('express');
 let path = require('path'); // part of node.js core

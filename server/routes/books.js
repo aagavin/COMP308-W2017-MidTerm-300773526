@@ -1,3 +1,10 @@
+/*
+  Aaron Fernandes - 300773526 
+  COMP 308 - Midterm exam 
+	https://comp308-300773526.herokuapp.com/
+
+  This file handles the /books route
+*/
 // modules required for routing
 let express = require('express');
 let router = express.Router();
