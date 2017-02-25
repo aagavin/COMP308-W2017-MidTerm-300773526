@@ -21,9 +21,11 @@ router.get('/login', (req, res, next)=>{
   res.render('auth/login', {'title': 'Login'});
 });
 
-router.post('/login', (req, res, next)=>{
-
-});
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/books',
+  failureRedirect: '/login',
+  failureFlash: 'bad login'
+}));
 
 router.get('/register', (req, res, next)=>{
   res.render('auth/register', {'title': 'Register a new account'});
