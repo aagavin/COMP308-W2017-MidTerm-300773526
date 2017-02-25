@@ -9,16 +9,36 @@ let passport = require('passport');
 let book = require('../models/books');
 let user = require('../models/users').User;
 
+
+let getDisplayName = (req)=>{
+  if (req.user){
+    return req.user.displayName;
+  }
+  return '';
+}
 /* GET home page. wildcard */
 router.get('/', (req, res, next) => {
+  let displayName = '';
+  if (req.user){
+    displayName=req.user.displayName;
+  }
+
   res.render('content/index', {
     title: 'Home',
-    books: ''
+    books: '',
+    'displayName': getDisplayName(req)
    });
 });
 
 router.get('/login', (req, res, next)=>{
-  res.render('auth/login', {'title': 'Login'});
+  let displayName = '';
+  if (req.user){
+    displayName=req.user.displayName;
+  }
+  res.render('auth/login', {
+    'title': 'Login',
+    'displayName': displayName
+  });
 });
 
 router.post('/login', passport.authenticate('local', {
@@ -48,7 +68,8 @@ router.post('/register', (req, res, next)=>{
 });
 
 router.get('/logout', (req, res, next)=>{
-
+  req.logout();
+  res.redirect('/'); // redirect to the home page
 });
 
 module.exports = router;

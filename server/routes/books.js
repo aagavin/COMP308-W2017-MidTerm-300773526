@@ -15,8 +15,17 @@ function requireAuth(req, res, next) {
   next();
 }
 
+// returns the display
+let getDisplayName = (req)=>{
+  if (req.user){
+    return req.user.displayName;
+  }
+  return '';
+}
+
 /* GET books List page. */
 router.get('/',requireAuth, (req, res, next) => {
+
   // find all books in the books collection
   book.find( (err, books) => {
     if (err) {
@@ -25,7 +34,8 @@ router.get('/',requireAuth, (req, res, next) => {
     else {
       res.render('books/index', {
         title: 'Books',
-        books: books
+        books: books,
+        'displayName': getDisplayName(req)
       });
     }
   });
@@ -35,7 +45,7 @@ router.get('/',requireAuth, (req, res, next) => {
 //  GET the Book Details page in order to add a new Book
 router.get('/add',requireAuth, (req, res, next) => {
 
-    res.render('books/details', {title: 'Add a new book', books: new book()})
+    res.render('books/details', {title: 'Add a new book', books: new book(), 'displayName': getDisplayName(req)})
 
 });
 
@@ -68,7 +78,8 @@ router.get('/:id',requireAuth, (req, res, next) => {
       else{
         res.render('books/details', {
           title: 'Book Details',
-          books: book
+          books: book,
+          'displayName': getDisplayName(req)
         });
       }
     });
