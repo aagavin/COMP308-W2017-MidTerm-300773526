@@ -48,27 +48,82 @@ router.post('/add', (req, res, next) => {
 
 // GET the Book Details page in order to edit an existing Book
 router.get('/:id', (req, res, next) => {
+  try{
+    let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+    book.findById(id, (err, book)=>{
+      if(err){
+        console.log(err);
+        res.end(err);
+      }
+      else{
+        res.render('books/details', {
+          title: 'Book Details',
+          books: book
+        });
+      }
+    });
+  }
+  catch(err){
+    console.log(err);
+    res.redirect('/errors/404');
+  }
+
 });
 
 // POST - process the information passed from the details form and update the document
 router.post('/:id', (req, res, next) => {
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+  try{
+    let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
+
+    let updateBook = book({
+       "_id": id,
+      "Title": req.body.title,
+      "Description": '',
+      "Price": req.body.price,
+      "Author": req.body.author,
+      "Genre": req.body.genre
+    });
+
+    book.update({_id: id}, updateBook, (err)=>{
+      if(err){
+        console.log(err);
+        res.send(err);
+
+      }
+      else{
+        res.redirect('/books');
+      }
+    });
+  }
+  catch(err){
+    console.log(err);
+    res.redirect('/errors/404');
+  }
 
 });
 
 // GET - process the delete by user id
 router.get('/delete/:id', (req, res, next) => {
+ try{
+    let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+    book.remove({_id: id}, (err)=>{
+      if(err){
+        console.log(err);
+        res.end(err);
+      }
+      else{
+         res.redirect('/books');
+      }
+    })
+  }
+  catch(err){
+    console.log(err);
+    res.redirect('/errors/404');
+  }
+    
 });
 
 
